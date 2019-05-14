@@ -1,15 +1,17 @@
 package ua.ifit.lms.dao.entity;
 
+import java.util.Date;
+
 public class Message {
 private long id;
 private long user_id;
 private String text;
-private String date_created;
+private Date date_created;
 
 
 public Message(){}
 
-public Message(long id, long user_id, String text, String date_created){
+public Message(long id, long user_id, String text, Date date_created){
 this.id=id;
 this.user_id=user_id;
 this.text=text;
@@ -40,11 +42,9 @@ this.date_created=date_created;
         this.text = text;
     }
 
-    public String getDate_created() {
-        return date_created;
-    }
+    public Date getDate_created() { return date_created; }
 
-    public void setDate_created(String date_created) {
+    public void setDate_created(Date date_created) {
         this.date_created = date_created;
     }
 

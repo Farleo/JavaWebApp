@@ -10,8 +10,11 @@ import java.nio.file.Paths;
 public class IndexSingletonView {
 
     private String path;
+    private String header;
     private String indexHtml;
     private String loginForm;
+    private String lobbyForm;
+    private String lobbyIndex;
     private String menu;
 
     private static IndexSingletonView ourInstance = new IndexSingletonView();
@@ -26,7 +29,10 @@ public class IndexSingletonView {
     public void setPath(String path) {
         this.path = path;
         this.indexHtml = getPartialHtml("index");
+        this.header = getPartialHtml("header");
         this.loginForm = getPartialHtml("login-form");
+        this.lobbyForm = getPartialHtml("lobby-form");
+        this.lobbyIndex = getPartialHtml("lobby-index");
         this.menu = getPartialHtml("menu");
     }
 
@@ -34,13 +40,24 @@ public class IndexSingletonView {
         return indexHtml;
     }
 
+    public String getHeader() { return header; }
+
     public String getLoginForm() {
         return loginForm;
+    }
+
+    public String  getLobbyForm() {
+        return lobbyForm;
+    }
+
+    public String  getLobbyIndex() {
+        return lobbyIndex;
     }
 
     public String getMenu() {
         return menu;
     }
+
     private String getPartialHtml(String filename){
         StringBuilder strb = new StringBuilder();
         Path file = Paths.get(this.path + filename + ".html");
