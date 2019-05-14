@@ -33,7 +33,7 @@ public class IndexSingletonView {
         this.indexHtml = getPartialHtml("index");
         this.header = getPartialHtml("header");
         this.loginForm = getPartialHtml("login-form");
-        this.loginForm = getPartialHtml("login-form-fail");
+        this.loginFormFail = getPartialHtml("login-form-fail");
         this.lobbyForm = getPartialHtml("lobby-form");
         this.lobbyIndex = getPartialHtml("lobby-index");
         this.menu = getPartialHtml("menu");

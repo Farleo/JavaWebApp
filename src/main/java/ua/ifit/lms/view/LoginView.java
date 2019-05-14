@@ -11,15 +11,17 @@ public class LoginView {
         String loginFormFail = indexSingletonView.getLoginFormFail();
         String menu = indexSingletonView.getMenu();
         return indBase
-                .replace("<!--### insert html here ### -->", menu)
-                .replace("<!--### insert html here ### -->", isSuccessfullLogin ? loginForm : loginFormFail);
+                .replace("<!--###header###-->", menu)
+                .replace("<!--###content###-->", isSuccessfullLogin ? loginForm : loginFormFail);
     }
 
     public String welcomUserPage(User user) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
-        String loginForm = indexSingletonView.getLoginForm();
-        return indBase.replace("<!--### insert html here ### -->", "Hello " + user.getName());
+        String menu = indexSingletonView.getMenu();
+        return indBase
+                .replace("<!--###header###-->", menu)
+                .replace("<!--###content###-->", "Hello " + user.getName());
     }
 
     public String getRegisterPage() {
@@ -28,7 +30,7 @@ public class LoginView {
         String registerForm = indexSingletonView.getRegister();
         String menu = indexSingletonView.getMenu();
         return indBase
-                .replace("<!--### insert html here ### -->", menu)
-                .replace("<!--### insert html here ### -->", registerForm);
+                .replace("<!--###header###-->", menu)
+                .replace("<!--###content###-->", registerForm);
     }
 }

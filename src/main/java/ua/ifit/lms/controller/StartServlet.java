@@ -34,11 +34,14 @@ public class StartServlet extends HttpServlet {
         UserRepository userRepository = new UserRepository();
         // get user credentials
         switch (request.getPathInfo()) {
-            case "/":
-                out.println(indexSingletonView.getIndexHtml());
-                break;
             case "/login":
             case "/login/":
+                User currentUser = (User) session.getAttribute("user");
+                if (currentUser != null) {
+                    out.println(loginView.welcomUserPage(currentUser));
+                    return;
+                }
+
                 if (request.getParameter("email") != null &&
                         request.getParameter("password") != null) {
                     String email = request.getParameter("email");
@@ -59,9 +62,8 @@ public class StartServlet extends HttpServlet {
                 break;
             case "/logout":
             case "/logout/":
-                // TODO add logout
-                out.println(indexSingletonView.getIndexHtml()
-                        .replace("<!--### insert html here ### -->", "<h1>logout</h1>"));
+                session.setAttribute("user", null);
+                response.sendRedirect("/main");
                 break;
             case "/register":
             case "/register/":
@@ -87,7 +89,11 @@ public class StartServlet extends HttpServlet {
                                     }
                 break;
             default:
-                out.println(indexSingletonView.getIndexHtml());
+                out.println("<html><head><title>MyServlet</title></head><body>");
+                out.write("<H1>Hello Servlet World! User!</H1>");
+                out.write("URI   \t" + request.getPathInfo());
+                out.println("</body>");
+                out.println("</html>");
         }
     }
 
