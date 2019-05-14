@@ -10,3 +10,18 @@ create table user
   constraint user_email_uindex
     unique (email)
 );
+
+create table message
+(
+	id int auto_increment,
+	user_id int not null,
+	text longtext not null,
+	date_created datetime null,
+	constraint message_pk
+		primary key (id),
+	constraint message_user_id_fk
+		foreign key (user_id) references user (id)
+			on update cascade on delete cascade
+);
+
+
