@@ -27,7 +27,7 @@ public class LobbyServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("/");
+            response.sendRedirect("/main");
             return;
         }
 
@@ -50,14 +50,14 @@ public class LobbyServlet extends HttpServlet {
         LobbyView lobbyView = new LobbyView();
         switch (request.getPathInfo()) {
             case "/index":
-                out.println(lobbyView.getIndex(lobbyRepository.getPublicRooms()));
+                out.println(lobbyView.getIndex(user, lobbyRepository.getPublicRooms()));
                 break;
             case "/edit":
 //                Note note = noteRepository.getNotesById(Long.parseLong(request.getParameter("id")));
 //                out.println(noteView.getExistingNote(note));
                 break;
             default:
-                out.println(lobbyView.getHtml());
+                out.println(lobbyView.getHtml(user));
         }
 
 

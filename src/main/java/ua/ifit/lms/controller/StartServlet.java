@@ -3,7 +3,7 @@ package ua.ifit.lms.controller;
 import ua.ifit.lms.dao.entity.User;
 import ua.ifit.lms.dao.repository.UserRepository;
 import ua.ifit.lms.view.IndexSingletonView;
-import ua.ifit.lms.view.LoginView;
+import ua.ifit.lms.view.MainView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.*;
 
-@WebServlet(name = "StartServlet", urlPatterns = {"/*"}, loadOnStartup = 1)
+@WebServlet(name = "StartServlet", urlPatterns = {"/", "/main"}, loadOnStartup = 1)
 public class StartServlet extends HttpServlet {
       protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,72 +26,21 @@ public class StartServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        LoginView loginView = new LoginView();
-        UserRepository userRepository = new UserRepository();
-        // get user credentials
-        switch (request.getPathInfo()) {
-            case "/login":
-            case "/login/":
-                User currentUser = (User) session.getAttribute("user");
-                if (currentUser != null) {
-                    out.println(loginView.welcomUserPage(currentUser));
-                    return;
-                }
-
-                if (request.getParameter("email") != null &&
-                        request.getParameter("password") != null) {
-                    String email = request.getParameter("email");
-                    String password = request.getParameter("password");
-
-                    // test repository
-                    User user = userRepository.getUserByEmailByPassword(email, password);
-                    // check if a user successfully logged in
-                    if (user != null) {
-                        session.setAttribute("user", user);
-                      response.sendRedirect("/lobby/index");
-                    } else {
-                        out.println(loginView.getloginPage(false));
-                    }
-                } else {
-                    out.println(loginView.getloginPage(true));
-                }
-                break;
-            case "/logout":
-            case "/logout/":
-                session.setAttribute("user", null);
-                response.sendRedirect("/main");
-                break;
-            case "/register":
-            case "/register/":
-                out.println(loginView.getRegisterPage());
-                if (request.getParameter("email") != null &&
-                        request.getParameter("password") != null &&
-                        request.getParameter("name") != null) {
-                    String email = request.getParameter("email");
-                    String password = request.getParameter("password");
-                    String name = request.getParameter("name");
-
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                    LocalDateTime now = LocalDateTime.now();
-
-                    User user = new User(0, email, password, name, dtf.format(now), dtf.format(now));
-                    userRepository.saveUser(user);
-                    user = userRepository.getUserByEmailByPassword(email, password);
-                    if (user != null) {
-
-                        session.setAttribute("user", user);
-                        response.sendRedirect("/lobby/index");
-                    }
-                                    }
-                break;
-            default:
-                out.println("<html><head><title>MyServlet</title></head><body>");
-                out.write("<H1>Hello Servlet World! User!</H1>");
-                out.write("URI   \t" + request.getPathInfo());
-                out.println("</body>");
-                out.println("</html>");
+        if ( request.getParameter("email") != null ) {
+            UserRepository userRepository = new UserRepository();
+            User user = userRepository.getUserByEmailByPassword(request.getParameter("email"),
+                    request.getParameter("password"));
+            if ( user == null ) {
+                out.write("Please Login Again");
+            } else {
+                session.setAttribute("user", user);
+                response.sendRedirect("/lobby/index");
+            }
         }
+
+        MainView mainView = new MainView();
+        User currentUser = (User) session.getAttribute("user");
+        out.println(mainView.getHtml(currentUser));
     }
 
 
