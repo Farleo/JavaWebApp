@@ -21,21 +21,11 @@ public class LobbyView {
                 .replace("<!--###header###-->", MenuHelper.GetMenu(user))
                 .replace("<!--###content###-->", indexSingleton.getLobbyIndex());
 
-        String allRooms = rooms.stream().map(r -> {
-            String text = "";
-            if (r.getName() != null) {
-                text = r.getName().length() > 20 ? r.getName().substring(0, 19) : r.getName();
-            }
-            return "<a class=\"room-short-view\" href=\"/lobby/edit?id=" + r.getId() + "\">" +
-                    "<div class=\"col-6 col-sm-4 col-md-3\" style=\"background-color:  #fff;\">\n" +
-                    "<h3 style=\"color: #fff ;\">" + text + "</h3>\n" +
-                    "<p style=\"color: #fff;\">" + r.getDescription() +
-                    "</p>\n" +
-                    "</div>\n" +
-                    "</a>";
-        }).collect(Collectors.joining(" "));
-
-        return page.replace("<!--###-add-room-###-->", allRooms);
+        String allRooms = rooms.stream().map(r -> indexSingleton.getLobbyItem()
+                    .replace("<!--###name###-->", r.getName())
+                    .replace("<!--###description###-->", r.getDescription()))
+                .collect(Collectors.joining(" "));
+        return page.replace("<!--###-add-rooms-###-->", allRooms);
     }
 
     public String getExistingRoom(User user, Room room) {

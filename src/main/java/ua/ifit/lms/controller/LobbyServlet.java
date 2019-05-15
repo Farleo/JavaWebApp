@@ -50,7 +50,9 @@ public class LobbyServlet extends HttpServlet {
         LobbyView lobbyView = new LobbyView();
         switch (request.getPathInfo()) {
             case "/index":
-                out.println(lobbyView.getIndex(user, lobbyRepository.getPublicRooms()));
+                String html = lobbyView.getIndex(user, lobbyRepository.getPublicRooms());
+                System.out.println("Lobby html: " + html);
+                out.println(html);
                 break;
             case "/edit":
 //                Note note = noteRepository.getNotesById(Long.parseLong(request.getParameter("id")));

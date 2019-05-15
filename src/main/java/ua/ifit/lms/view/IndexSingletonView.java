@@ -21,6 +21,7 @@ public class IndexSingletonView {
 
     private String lobbyIndex;
     private String lobbyForm;
+    private String lobbyItem;
 
 
 
@@ -44,6 +45,7 @@ public class IndexSingletonView {
         this.loginFormFail = getPartialHtml("login-form-fail");
 
         this.lobbyForm = getPartialHtml("lobby-form");
+        this.lobbyItem = getPartialHtml("lobby-item");
         this.lobbyIndex = getPartialHtml("lobby-index");
     }
 
@@ -63,6 +65,8 @@ public class IndexSingletonView {
 
     /* Lobby */
     public String  getLobbyForm() { return lobbyForm; }
+
+    public String  getLobbyItem() { return lobbyItem; }
 
     public String  getLobbyIndex() { return lobbyIndex; }
 
