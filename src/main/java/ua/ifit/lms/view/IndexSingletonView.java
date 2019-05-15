@@ -12,6 +12,7 @@ public class IndexSingletonView {
     private String path;
 
     private String indexHtml;
+    private String indexJsp;
     private String menu;
     private String menuWithUser;
 
@@ -36,6 +37,7 @@ public class IndexSingletonView {
 
     public void setPath(String path) {
         this.path = path;
+        this.indexJsp = getPartialJsp("message-item");
         this.indexHtml = getPartialHtml("index");
         this.menu = getPartialHtml("menu");
         this.menuWithUser = getPartialHtml("menu-logged-in");
@@ -51,6 +53,8 @@ public class IndexSingletonView {
 
     /* Main */
     public String getIndexHtml() { return indexHtml; }
+
+    public String getIndexJsp() { return indexJsp; }
 
     public String getMenu() { return menu; }
 
@@ -71,8 +75,16 @@ public class IndexSingletonView {
     public String  getLobbyIndex() { return lobbyIndex; }
 
     private String getPartialHtml(String filename){
+        return getPartial(filename, ".html");
+    }
+
+    private String getPartialJsp(String filename){
+        return getPartial(filename, ".jsp");
+    }
+
+    private String getPartial(String filename, String ext){
         StringBuilder strb = new StringBuilder();
-        Path file = Paths.get(this.path + filename + ".html");
+        Path file = Paths.get(this.path + filename + ext);
         Charset charset = Charset.forName("UTF-8");
 
         try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
@@ -86,6 +98,4 @@ public class IndexSingletonView {
 
         return strb.toString();
     }
-
-
 }

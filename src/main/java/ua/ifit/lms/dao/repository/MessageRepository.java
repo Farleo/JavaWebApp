@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MessageRepository {
-
     public void saveMassage(Message message){
         DataSource dataSource = new DataSource();
         try (
@@ -15,9 +14,10 @@ public class MessageRepository {
                 PreparedStatement stmt =
                         conn.prepareStatement("INSERT INTO message (user_id, text, date_created) VALUES (?,?,?)")
         ) {
-            stmt.setLong(1, message.getUser_id());
-            stmt.setString(2, message.getText());
-            stmt.setDate(3, new java.sql.Date(message.getDate_created().getTime()));
+
+            //stmt.setLong(1, message.getSender());
+            stmt.setString(2, message.getMessage());
+            stmt.setDate(3, new java.sql.Date(message.getReceived().getTime()));
 
             System.out.println(stmt.toString());
 

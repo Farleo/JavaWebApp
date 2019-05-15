@@ -3,58 +3,44 @@ package ua.ifit.lms.dao.entity;
 import java.util.Date;
 
 public class Message {
-private long id;
-private long user_id;
-private String text;
-private Date date_created;
+    private String message;
+    private String sender;
+    private Date received;
 
-
-public Message(){}
-
-public Message(long id, long user_id, String text, Date date_created){
-this.id=id;
-this.user_id=user_id;
-this.text=text;
-this.date_created=date_created;
-}
-
-    public long getId() {
-        return id;
+    public Message(final String message, final String sender)
+    {
+        this.message = message;
+        this.sender = sender;
+        this.received = new Date();
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public final String getMessage() {
+        return message;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public final void setMessage(final String message) {
+        this.message = message;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public final String getSender() {
+        return sender;
     }
 
-    public String getText() {
-        return text;
+    public final void setSender(final String sender) {
+        this.sender = sender;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public final Date getReceived() {
+        return received;
     }
 
-    public Date getDate_created() { return date_created; }
-
-    public void setDate_created(Date date_created) {
-        this.date_created = date_created;
+    public final void setReceived(final Date received) {
+        this.received = received;
     }
 
     @Override
     public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", text='" + text + '\'' +
-                ", date_created='" + date_created + '\'' +
-                '}';
+        return "ChatMessage [message=" + message + ", sender=" + sender
+                + ", received=" + received + "]";
     }
 }

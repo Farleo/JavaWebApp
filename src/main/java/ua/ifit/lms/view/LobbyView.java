@@ -27,15 +27,4 @@ public class LobbyView {
                 .collect(Collectors.joining(" "));
         return page.replace("<!--###-add-rooms-###-->", allRooms);
     }
-
-    public String getExistingRoom(User user, Room room) {
-        IndexSingletonView indexSingleton = IndexSingletonView.getInstance();
-        return indexSingleton.getIndexHtml()
-                .replace("<!--###header###-->", MenuHelper.GetMenu(user))
-                .replace("<!--###content###-->", indexSingleton.getLobbyForm())
-                .replace("></textarea>", ">" +
-                        room.getName() +
-                        "</textarea>")
-                .replace("<!--###existing-room-id###-->", "<input name=\"roomid\" type=\"hidden\" value=\"" + room.getId() + "\">");
-    }
 }
